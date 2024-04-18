@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ApexNetwork Backend Developer Assessment
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains the solutions to apex network backend developer assessment role.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> This guide assumed you have [PHP 8.2+](https://php.net/releases/) and [Composer](https://getcomposer.org/) installed on your pc.
+>
+### Clone and Navigate
+Clone this repository and navigate into it:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+git clone git@github.com:iamolayemi/apex-network-assessment.git
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+cd apex-network-assessment
+```
 
-## Learning Laravel
+### Create a `.env` file
+Copy the contents of the `.env.example` file into a new `.env` file by running the following command:
+```bash
+cp .env.example .env
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Install Dependencies
+Install the application dependencies by running the following command:
+```bash 
+composer install
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Setup Application Key
+Generate a new application key by running the following command:
+```bash
+php artisan key:generate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Setup Database
+You can use SQLite for the database by default. If you want to use another database, update the database configuration in the `.env` file.
 
-## Laravel Sponsors
+Create a new SQLite database by running the following command:
+```bash
+touch database/database.sqlite
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Run Migrations
+Run the database migrations to create the necessary tables by running the following command:
+```bash
+php artisan migrate
+```
 
-### Premium Partners
+### Seed Database
+Seed the database with dummy data by running the following command:
+```bash
+php artisan db:seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Setup Laravel Passport
+1. To set up passport oauth keys run the following command:
+```bash
+php artisan passport:keys
+```
 
-## Contributing
+2. Next, you need to setup the Laravel Passport personal access token clients by running the following command:
+```bash
+php artisan passport:client --personal
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+After running the command, you will be prompted to enter the client name. You can enter any name you want.
 
-## Code of Conduct
+Then copy the client id and client secret generated and update the `PASSPORT_PERSONAL_ACCESS_CLIENT_ID` and `PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET` in the `.env` file.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Start the Application
+Start the application by running the following command:
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+The application should now be running and accessible at http://localhost:8000 in your web browser. You can access the API documentation at http://localhost:8000/docs.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Running Tests
+To run tests for the application you can use this command:
+```bash
+php artisan test
 
-## License
+# To run tests with coverage
+php artisan test --coverage
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Demo Credentials
+You can use the following credentials to test the application:
+
+### Admin
+- Email: admin@testing.com
+- Password: Password123!
+
+### User
+- Email: user@testing.com
+- Password: Password123!

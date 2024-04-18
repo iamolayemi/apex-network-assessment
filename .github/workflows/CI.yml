@@ -72,5 +72,8 @@ jobs:
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
 
+      - name: Setup Passport OAuth Keys
+        run: php artisan passport:keys
+
       - name: Run All Tests
         run: php artisan test
