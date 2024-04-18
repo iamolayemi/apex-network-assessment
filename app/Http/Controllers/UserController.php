@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 
 /**
  * @group User Management
+ *
+ * APIs for managing users. Only admins can create, update, reset password, and delete users.
  */
 class UserController extends Controller implements HasMiddleware
 {
