@@ -15,16 +15,16 @@ git clone git@github.com:iamolayemi/apex-network-assessment.git
 cd apex-network-assessment
 ```
 
-### Create a `.env` file
-Copy the contents of the `.env.example` file into a new `.env` file by running the following command:
-```bash
-cp .env.example .env
-```
-
 ### Install Dependencies
 Install the application dependencies by running the following command:
 ```bash 
 composer install
+```
+
+### Create a `.env` file
+Copy the contents of the `.env.example` file into a new `.env` file by running the following command:
+```bash
+cp .env.example .env
 ```
 
 ### Setup Application Key
@@ -76,15 +76,6 @@ php artisan serve
 
 The application should now be running and accessible at http://localhost:8000 in your web browser. You can access the API documentation at http://localhost:8000/docs.
 
-## Running Tests
-To run tests for the application you can use this command:
-```bash
-php artisan test
-
-# To run tests with coverage
-php artisan test --coverage
-```
-
 ## Demo Credentials
 You can use the following credentials to test the application:
 
@@ -95,3 +86,14 @@ You can use the following credentials to test the application:
 ### User
 - Email: user@example.com
 - Password: Password123!
+
+## Running Tests
+To run tests for the application you can use this command:
+```bash
+php artisan test
+
+# To run tests with coverage
+php artisan test --coverage
+```
+
+
