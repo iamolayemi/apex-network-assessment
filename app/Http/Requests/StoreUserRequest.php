@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserRole;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends BaseFormRequest
+class StoreUserRequest extends BaseFormRequest
 {
     public function rules(): array
     {
@@ -14,6 +15,7 @@ class RegisterRequest extends BaseFormRequest
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => ['required', 'string', Password::default()],
             'password_confirmation' => ['required', 'string', 'same:password'],
+            'role' => ['required', 'string', Rule::enum(UserRole::class)],
         ];
     }
 
@@ -32,7 +34,7 @@ class RegisterRequest extends BaseFormRequest
     {
         return [
             'name' => [
-                'example' => 'Test Admin',
+                'example' => 'Test User',
             ],
             'email' => [
                 'example' => 'user@example.com',
@@ -42,6 +44,10 @@ class RegisterRequest extends BaseFormRequest
             ],
             'password_confirmation' => [
                 'example' => 'Password123!',
+            ],
+            'role' => [
+                'example' => 'user',
+                'enum' => UserRole::class,
             ],
         ];
     }

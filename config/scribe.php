@@ -171,6 +171,7 @@ INTRO
         // See https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting and https://scribe.knuckles.wtf/laravel/reference/config#order for details
         'order' => [
             'Authentication',
+            'Account Management',
         ],
     ],
 
@@ -243,7 +244,7 @@ INTRO
             Strategies\Responses\UseResponseFileTag::class,
             [
                 Strategies\Responses\ResponseCalls::class,
-                ['only' => ['GET *']],
+                ['only' => ['']],
             ],
         ],
         'responseFields' => [

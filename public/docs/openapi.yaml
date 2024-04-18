@@ -26,7 +26,7 @@ paths:
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: admin@testing.com
+                  example: admin@example.com
                 password:
                   type: string
                   description: ''
@@ -54,11 +54,11 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: 'John Doe'
+                  example: 'Test Admin'
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: user@testing.com
+                  example: user@example.com
                 password:
                   type: string
                   description: ''
@@ -82,9 +82,233 @@ paths:
       responses: {  }
       tags:
         - Authentication
+  /api/account:
+    get:
+      summary: 'Get account details'
+      operationId: getAccountDetails
+      description: 'This endpoint allows an authenticated user to retrieve their account details.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Account Management'
+    patch:
+      summary: 'Update account details'
+      operationId: updateAccountDetails
+      description: 'This endpoint allows an authenticated user to update their account details.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Account Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'Test User'
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: user@example.com
+              required:
+                - name
+                - email
+  /api/account/change-password:
+    post:
+      summary: 'Change account password'
+      operationId: changeAccountPassword
+      description: 'This endpoint allows an authenticated user to change their account password.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Account Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  description: ''
+                  example: Password123!
+                password:
+                  type: string
+                  description: ''
+                  example: NewPassword123!
+                password_confirmation:
+                  type: string
+                  description: 'The value and <code>password</code> must match.'
+                  example: NewPassword123!
+              required:
+                - current_password
+                - password
+                - password_confirmation
+  /api/users:
+    get:
+      summary: 'Get all users'
+      operationId: getAllUsers
+      description: 'This endpoint allows you to get all users.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'The current page number.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'The current page number.'
+            example: 1
+        -
+          in: query
+          name: per_page
+          description: 'The number of items to display per page.'
+          example: 10
+          required: false
+          schema:
+            type: integer
+            description: 'The number of items to display per page.'
+            example: 10
+      responses: {  }
+      tags:
+        - 'User Management'
+    post:
+      summary: 'Create a user'
+      operationId: createAUser
+      description: 'This endpoint allows an admin to create a new user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: 'Test User'
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: user@example.com
+                password:
+                  type: string
+                  description: ''
+                  example: Password123!
+                password_confirmation:
+                  type: string
+                  description: 'The value and <code>password</code> must match.'
+                  example: Password123!
+                role:
+                  type: string
+                  description: ''
+                  example: user
+                  enum:
+                    - user
+                    - admin
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+                - role
+  '/api/users/{id}':
+    get:
+      summary: 'Get a specific user'
+      operationId: getASpecificUser
+      description: 'This endpoint allows you to get the details of a specific user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User Management'
+    put:
+      summary: 'Update a user'
+      operationId: updateAUser
+      description: 'This endpoint allows an admin to update the details of a specific user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: 'Test User'
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: user@example.com
+                role:
+                  type: string
+                  description: ''
+                  example: user
+                  enum:
+                    - user
+                    - admin
+              required:
+                - name
+                - email
+                - role
+    delete:
+      summary: 'Delete a user'
+      operationId: deleteAUser
+      description: 'This endpoint allows an admin to delete a specific user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User Management'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: 9bd6f2ac-a221-4cdb-b04d-a77afe873311
+        required: true
+        schema:
+          type: string
+  '/api/users/{user_id}/resetPassword':
+    post:
+      summary: 'Reset user password'
+      operationId: resetUserPassword
+      description: 'This endpoint allows an admin to reset the password of a specific user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - 'User Management'
+    parameters:
+      -
+        in: path
+        name: user_id
+        description: 'The ID of the user.'
+        example: 9bd6f2ac-a221-4cdb-b04d-a77afe873311
+        required: true
+        schema:
+          type: string
 tags:
   -
     name: Authentication
+    description: "\nAPI endpoints for authentication. This includes logging in, registering, and logging out."
+  -
+    name: 'Account Management'
+    description: "\nAPI endpoints for managing user account. Authenticated users can retrieve their account details, update their account details, and change their password."
+  -
+    name: 'User Management'
     description: ''
 components:
   securitySchemes:

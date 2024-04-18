@@ -28,7 +28,7 @@ class LoginRequest extends BaseFormRequest
     {
         return [
             'email' => [
-                'example' => 'admin@testing.com',
+                'example' => 'admin@example.com',
             ],
             'password' => [
                 'example' => 'Password123!',

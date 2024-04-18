@@ -2,16 +2,15 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends BaseFormRequest
+class ChangePasswordRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'current_password' => ['required', 'string', 'current_password'],
             'password' => ['required', 'string', Password::default()],
             'password_confirmation' => ['required', 'string', 'same:password'],
         ];
@@ -20,7 +19,7 @@ class RegisterRequest extends BaseFormRequest
     public function messages(): array
     {
         return [
-            'email.unique' => __('The provided email is already registered by another user.'),
+            'current_password.current_password' => __('The current password is incorrect.'),
             'password_confirmation.same' => __('The password confirmation does not match.'),
         ];
     }
@@ -31,17 +30,14 @@ class RegisterRequest extends BaseFormRequest
     public function bodyParameters(): array
     {
         return [
-            'name' => [
-                'example' => 'Test Admin',
-            ],
-            'email' => [
-                'example' => 'user@example.com',
+            'current_password' => [
+                'example' => 'Password123!',
             ],
             'password' => [
-                'example' => 'Password123!',
+                'example' => 'NewPassword123!',
             ],
             'password_confirmation' => [
-                'example' => 'Password123!',
+                'example' => 'NewPassword123!',
             ],
         ];
     }

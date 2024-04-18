@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
@@ -12,6 +13,8 @@ use Knuckles\Scribe\Attributes\Group;
 
 /**
  * @group Authentication
+ *
+ * API endpoints for authentication. This includes logging in, registering, and logging out.
  */
 class AuthController extends Controller
 {
@@ -49,7 +52,12 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->safe()->except('password_confirmation'));
+        $user = User::create(array_merge(
+            $request->safe()->except('password_confirmation'), [
+                'email_verified_at' => now(),
+                'role' => UserRole::User,
+            ])
+        );
 
         $personalAccessToken = $user->createToken(name: 'accessToken');
 
@@ -67,7 +75,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->token()->revoke();
+        $request->user()->token()->delete();
 
         return $this->respondSuccess(__('Your account has been logged out successfully.'));
     }
