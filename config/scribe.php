@@ -172,7 +172,7 @@ INTRO
         'order' => [
             'Authentication',
             'Account Management',
-            'User Management'
+            'User Management',
         ],
     ],
 

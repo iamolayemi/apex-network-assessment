@@ -55,11 +55,11 @@ class AuthController extends Controller
         $user = User::create(array_merge(
             $request->safe()->except('password_confirmation'), [
                 'email_verified_at' => now(),
-                'role' => UserRole::User,
+                'role' => UserRole::USER,
             ])
         );
 
-        $personalAccessToken = $user->createToken(name: 'accessToken');
+        $personalAccessToken = $user->createToken('accessToken');
 
         return $this->respondSuccessWithData(__('Your account has been created successfully.'), [
             'user' => $user,

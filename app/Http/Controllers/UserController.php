@@ -57,7 +57,7 @@ class UserController extends Controller implements HasMiddleware
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->safe()->except(['password_confirmation']));
 
         return $this->respondSuccessWithData(__('User created successfully.'), $user);
     }
@@ -69,6 +69,10 @@ class UserController extends Controller implements HasMiddleware
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if ($request->user()->id === $user->id) {
+            return $this->respondForbidden(__('You cannot update your own account.'));
+        }
+
         $user->update($request->validated());
 
         return $this->respondSuccess(__('User updated successfully.'));
@@ -79,8 +83,12 @@ class UserController extends Controller implements HasMiddleware
      *
      * This endpoint allows an admin to delete a specific user.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
+        if ($request->user()->id === $user->id) {
+            return $this->respondForbidden(__('You cannot delete your own account.'));
+        }
+
         $user->delete();
 
         return $this->respondSuccess(__('User deleted successfully.'));
@@ -91,8 +99,12 @@ class UserController extends Controller implements HasMiddleware
      *
      * This endpoint allows an admin to reset the password of a specific user.
      */
-    public function resetPassword(User $user)
+    public function resetPassword(Request $request, User $user)
     {
+        if ($request->user()->id === $user->id) {
+            return $this->respondForbidden(__('You cannot reset your own password.'));
+        }
+
         $password = Str::random(16);
 
         $user->update(['password' => Hash::make($password)]);

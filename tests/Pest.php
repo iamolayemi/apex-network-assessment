@@ -11,6 +11,8 @@
 |
 */
 
+use Laravel\Passport\ClientRepository;
+
 uses(
     Tests\TestCase::class,
     // Illuminate\Foundation\Testing\RefreshDatabase::class,
@@ -42,7 +44,15 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function setUpPassport(): void
 {
-    // ..
+    $clientRepository = new ClientRepository();
+    $client = $clientRepository->createPersonalAccessClient(
+        null, 'Test Personal Access Client', 'http://localhost'
+    );
+
+    config([
+        'passport.personal_access_client.id' => $client->id,
+        'passport.personal_access_client.secret' => $client->secret,
+    ]);
 }
