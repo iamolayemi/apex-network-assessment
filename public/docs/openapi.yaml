@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+paths:
+  /api/auth/login:
+    post:
+      summary: 'Login to an account'
+      operationId: loginToAnAccount
+      description: 'Log in to an account using email and password. Returns the user info and an access token.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: admin@testing.com
+                password:
+                  type: string
+                  description: ''
+                  example: Password123!
+              required:
+                - email
+                - password
+      security: []
+  /api/auth/register:
+    post:
+      summary: 'Register a new account'
+      operationId: registerANewAccount
+      description: 'Register a new user account. Returns the user info and an access token.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: user@testing.com
+                password:
+                  type: string
+                  description: ''
+                  example: Password123!
+                password_confirmation:
+                  type: string
+                  description: 'The value and <code>password</code> must match.'
+                  example: Password123!
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      security: []
+  /api/auth/logout:
+    delete:
+      summary: 'Logout from an account'
+      operationId: logoutFromAnAccount
+      description: 'Log out from an account. Revokes the current access token.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+tags:
+  -
+    name: Authentication
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

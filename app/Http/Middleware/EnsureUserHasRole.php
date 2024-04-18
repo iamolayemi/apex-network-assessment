@@ -12,7 +12,7 @@ class EnsureUserHasRole
     /**
      * Handle an incoming request.
      */
-        public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
         if ($request->user()->role !== UserRole::tryFrom($role)) {
             abort(403, 'You are not authorized to access this resource.');

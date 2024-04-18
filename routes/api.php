@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::controller(AuthController::class)->group(function () {
+    Route::post('auth/login', 'login')->name('auth.login');
+    Route::post('auth/register', 'register')->name('auth.register');
+    Route::delete('auth/logout', 'logout')->name('auth.logout')->middleware('auth:api');
+});
