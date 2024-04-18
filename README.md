@@ -89,9 +89,9 @@ php artisan test --coverage
 You can use the following credentials to test the application:
 
 ### Admin
-- Email: admin@testing.com
+- Email: admin@example.com
 - Password: Password123!
 
 ### User
-- Email: user@testing.com
+- Email: user@example.com
 - Password: Password123!
